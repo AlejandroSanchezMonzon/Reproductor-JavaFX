@@ -15,10 +15,43 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="420.0" style="-fx-border-color: black; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="720.0" maxWidth="1080.0" prefHeight="700.0" prefWidth="420.0" style="-fx-border-color: black; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <FlowPane alignment="CENTER" columnHalignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="480.0" prefWidth="420.0">
          <children>
+            <Label fx:id="appTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="154.0" prefWidth="282.0" text="Reproductor JavaFXML" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Perpetua" size="45.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.19318183263142905">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.1621869152742671">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="0.019999999552965164" blue="0.5054399967193604" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.15" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/app-icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
               <ImageView fx:id="songImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@../images/icons/default.png" />
               </ImageView>
@@ -94,45 +127,4 @@
          </padding>
       </FlowPane>
    </center>
-   <top>
-      <Label fx:id="appTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="154.0" prefWidth="282.0" text="Reproductor JavaFXML" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Perpetua" size="45.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-         <textFill>
-            <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.19318183263142905">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color />
-                     </color>
-                  </Stop>
-                  <Stop offset="0.1621869152742671">
-                     <color>
-                        <Color />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="1.0" green="0.019999999552965164" blue="0.5054399967193604" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </textFill>
-         <padding>
-            <Insets top="25.0" />
-         </padding>
-         <graphic>
-            <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.15" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/icons/app-icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Label>
-   </top>
 </BorderPane>
