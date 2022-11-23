@@ -1,6 +1,7 @@
 module com.example.reproductorjavafx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
 
     opens reproductorjavafx to javafx.fxml;
