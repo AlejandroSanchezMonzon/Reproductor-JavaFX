@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="720.0" maxWidth="1080.0" prefHeight="700.0" prefWidth="420.0" style="-fx-border-color: black; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="720.0" maxWidth="1080.0" prefHeight="700.0" prefWidth="420.0" style="-fx-border-color: black; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reproductorjavafx.controllers.AppController">
    <center>
       <FlowPane alignment="CENTER" columnHalignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="480.0" prefWidth="420.0">
          <children>
@@ -94,7 +94,7 @@
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/icons/pause.png" />
+                              <Image url="@../images/icons/play.png" />
                            </image>
                         </ImageView>
                      </graphic>

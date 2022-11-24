@@ -8,20 +8,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import reproductorjavafx.models.Multimedia;
 
+import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AppController implements Initializable {
-    Media media;
-    MediaPlayer mediaPlayer;
-
     @FXML
     private Button startButton;
     @FXML
@@ -35,48 +29,77 @@ public class AppController implements Initializable {
     private Label albumLabel;
     @FXML
     private Label artistLabel;
-
     @FXML
     private ImageView songImage;
-
     @FXML
     private Slider timeSlider;
 
-    public AppController(Button startButton, Button pauseButton, Button endButton, Label songLabel, Label albumLabel, Label artistLabel, ImageView songImage, Slider timeSlider) {
-        this.startButton = startButton;
-        this.pauseButton = pauseButton;
-        this.endButton = endButton;
-        this.songLabel = songLabel;
-        this.albumLabel = albumLabel;
-        this.artistLabel = artistLabel;
-        this.songImage = songImage;
-        this.timeSlider = timeSlider;
-    }
+    private boolean isPause = true;
+
+    private final String resourcesPath = System.getProperty("user.dir") + File.separator +
+            "src" + File.separator +
+            "main" + File.separator +
+            "resources" + File.separator +
+            "reproductorjavafx";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Multimedia> songs = new ArrayList<>();
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/BoDleasons_-_Forward_to_the_Future.mp3"))));
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/DHDMusic_-_Contemporary_Covers.mp3"))));
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/Flashinmusic_-_O_menino_da_percussao.mp3"))));
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/Heavenless_-_Motivational_Business_corporate.mp3"))));
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/Igor_Pumphonia_-_Igor_Pumphonia_-_My_Love_Is_Real__Second_Version_Dub_.mp3"))));
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/NEONMusic_-_Positive_Progressive_House.mp3"))));
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/QubeSounds_-_Digital_Abstract_Technology_Promo.mp3"))));
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/QubeSounds_-_The_Vlog_Trip_Hop_Beat.mp3"))));
-        songs.add(new Multimedia(String.valueOf(this.getClass().getResource("reproductorjavafx/audios/TimTaj_-_Just_Go_Away.mp3"))));
+        Multimedia multimedia = new Multimedia(resourcesPath + File.separator +
+                "audios" + File.separator +
+                "BoDleasons_-_Forward_to_the_Future.mp3");
+        multimedia.getMedia().getMetadata().addListener((MapChangeListener.Change<? extends String, ?> change) -> {
+            String key = change.getKey();
+            if ("image".equals(key)) {
+                songImage.setImage((Image) change.getValueAdded());
+            } else {
+                songImage.setImage(new Image(resourcesPath + File.separator + "images" + File.separator + "covers" + File.separator + "songCover.png"));
+                songImage.setFitHeight(150.0);
+                songImage.setFitWidth(200.0);
+            }
 
-        songs.get(0).getMedia().getMetadata().addListener((MapChangeListener.Change<? extends String, ?>change) -> {
-            switch (change.getKey().toString()) {
-                case "title" -> songLabel.setText(change.getValueAdded().toString());
-                case "album" -> albumLabel.setText(change.getValueAdded().toString());
-                case "artist" -> artistLabel.setText(change.getValueAdded().toString());
-                case "image" -> songImage.setImage((Image) change.getValueAdded());
+            if ("title".equals(key)) {
+                songLabel.setText(change.getValueAdded().toString());
+            }
+
+            if ("artist".equals(key)) {
+                artistLabel.setText(change.getValueAdded().toString());
+            }
+
+            if ("album".equals(key)) {
+                albumLabel.setText(change.getValueAdded().toString());
+            } else {
+                albumLabel.setText(songLabel.getText());
             }
         });
 
-        sliderDuration(songs.get(0));
-        sliderController(songs.get(0));
+        sliderDuration(multimedia);
+        sliderController(multimedia);
+
+        pauseButton.setOnAction(event -> playController(multimedia));
+        startButton.setOnAction(event -> rewindSong(multimedia));
+        endButton.setOnAction(event -> finishSong(multimedia));
+    }
+
+    private void finishSong(Multimedia multimedia) {
+        multimedia.getMediaPlayer().seek(multimedia.getMediaPlayer().getTotalDuration());
+        timeSlider.setValue(multimedia.getMediaPlayer().getTotalDuration().toMillis());
+    }
+
+    private void rewindSong(Multimedia multimedia) {
+        multimedia.getMediaPlayer().seek(Duration.ZERO);
+        timeSlider.setValue(Duration.ZERO.toMillis());
+    }
+
+    private void playController(Multimedia multimedia) {
+        if (isPause) {
+            multimedia.getMediaPlayer().play();
+            isPause = false;
+
+            changeButton("pause");
+        } else {
+            multimedia.getMediaPlayer().pause();
+            changeButton("play");
+        }
     }
 
     private void sliderDuration(Multimedia multimedia) {
@@ -92,11 +115,19 @@ public class AppController implements Initializable {
                 multimedia.getMediaPlayer().seek(Duration.seconds(newValue.floatValue())));
     }
 
-    private void changeButton(Button button, String path){
-        Image image = new Image(path);
-        ImageView imageView = new ImageView(image);
+    private void changeButton(String opcion) {
+        Image image;
+        ImageView imageView;
+
+        if (opcion.equals("play")) {
+            image = new Image(resourcesPath + File.separator + "images" + File.separator + "icons" + File.separator + "play.png");
+        } else {
+            image = new Image(resourcesPath + File.separator + "images" + File.separator + "icons" + File.separator + "pause.png");
+        }
+
+        imageView = new ImageView(image);
         imageView.setFitHeight(25.0);
         imageView.setFitWidth(25.0);
-        button.setGraphic(imageView);
+        pauseButton.setGraphic(imageView);
     }
 }
