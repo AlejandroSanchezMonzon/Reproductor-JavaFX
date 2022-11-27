@@ -112,7 +112,7 @@
                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                   </VBox.margin>
                  </HBox>
-                 <Slider fx:id="timeSlider">
+                 <Slider fx:id="timeSlider" blockIncrement="1.0" showTickMarks="true">
                   <padding>
                      <Insets left="25.0" right="25.0" top="25.0" />
                   </padding>

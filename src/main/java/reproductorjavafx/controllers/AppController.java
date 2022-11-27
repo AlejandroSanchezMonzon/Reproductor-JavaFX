@@ -9,10 +9,12 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import reproductorjavafx.App;
 import reproductorjavafx.models.Multimedia;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AppController implements Initializable {
@@ -35,24 +37,23 @@ public class AppController implements Initializable {
     private Slider timeSlider;
 
     private boolean isPause = true;
-
-    private final String resourcesPath = System.getProperty("user.dir") + File.separator +
-            "src" + File.separator +
-            "main" + File.separator +
-            "resources" + File.separator +
-            "reproductorjavafx";
+    private final String resourcesPath =
+            System.getProperty("user.dir") + File.separator +
+                    "src" + File.separator +
+                    "main" + File.separator +
+                    "resources" + File.separator +
+                    "reproductorjavafx";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Multimedia multimedia = new Multimedia(resourcesPath + File.separator +
-                "audios" + File.separator +
-                "BoDleasons_-_Forward_to_the_Future.mp3");
+        Multimedia multimedia = new Multimedia(resourcesPath + File.separator + "audios" + File.separator + "Paulo_Londra_Julieta.mp3");
+
         multimedia.getMedia().getMetadata().addListener((MapChangeListener.Change<? extends String, ?> change) -> {
             String key = change.getKey();
             if ("image".equals(key)) {
                 songImage.setImage((Image) change.getValueAdded());
             } else {
-                songImage.setImage(new Image(resourcesPath + File.separator + "images" + File.separator + "covers" + File.separator + "songCover.png"));
+                songImage.setImage(new Image(Objects.requireNonNull(App.class.getResourceAsStream("images/covers/julieta_cover.jpg"))));
                 songImage.setFitHeight(150.0);
                 songImage.setFitWidth(200.0);
             }
@@ -72,7 +73,7 @@ public class AppController implements Initializable {
             }
         });
 
-        sliderDuration(multimedia);
+        sliderSync(multimedia);
         sliderController(multimedia);
 
         pauseButton.setOnAction(event -> playController(multimedia));
@@ -98,21 +99,45 @@ public class AppController implements Initializable {
             changeButton("pause");
         } else {
             multimedia.getMediaPlayer().pause();
+            isPause = true;
+
             changeButton("play");
         }
     }
 
-    private void sliderDuration(Multimedia multimedia) {
-        multimedia.getMediaPlayer().currentTimeProperty().addListener((obs, oldTime, newTime) -> {
+    private void sliderSync(Multimedia multimedia) {
+        multimedia.getMediaPlayer().currentTimeProperty().addListener((obs, oldValue, newValue) -> {
             if (!timeSlider.isValueChanging()) {
-                timeSlider.setValue(newTime.toSeconds());
+                double totalDuration = multimedia.getMediaPlayer().getTotalDuration().toSeconds();
+
+                timeSlider.setValue((newValue.toSeconds() * 100) / totalDuration);
             }
         });
     }
 
     private void sliderController(Multimedia multimedia) {
-        timeSlider.valueProperty().addListener((observable, oldValue, newValue) ->
-                multimedia.getMediaPlayer().seek(Duration.seconds(newValue.floatValue())));
+        timeSlider.setOnMousePressed(event -> {
+
+            double sliderPos = timeSlider.getValue();
+            double totalDuration = multimedia.getMediaPlayer().getTotalDuration().toSeconds();
+            double time = (sliderPos * totalDuration) / 100;
+
+            multimedia.getMediaPlayer().seek(Duration.seconds(time));
+        });
+
+/*
+        Descomentaer este bloque de código y comentar el de arriba para que la cancion cambie al desplazar y soltar el slider
+        y no al pulsar en un punto del mismo.
+
+        timeSlider.setOnMouseReleased(event -> {
+
+            double sliderPos = timeSlider.getValue();
+            double totalDuration = multimedia.getMediaPlayer().getTotalDuration().toSeconds();
+            double time = (sliderPos * totalDuration) / 100;
+
+            multimedia.getMediaPlayer().seek(Duration.seconds(time));
+        });
+*/
     }
 
     private void changeButton(String opcion) {
@@ -120,9 +145,9 @@ public class AppController implements Initializable {
         ImageView imageView;
 
         if (opcion.equals("play")) {
-            image = new Image(resourcesPath + File.separator + "images" + File.separator + "icons" + File.separator + "play.png");
+            image = new Image(Objects.requireNonNull(App.class.getResourceAsStream("images/icons/play.png")));
         } else {
-            image = new Image(resourcesPath + File.separator + "images" + File.separator + "icons" + File.separator + "pause.png");
+            image = new Image(Objects.requireNonNull(App.class.getResourceAsStream("images/icons/pause.png")));
         }
 
         imageView = new ImageView(image);
