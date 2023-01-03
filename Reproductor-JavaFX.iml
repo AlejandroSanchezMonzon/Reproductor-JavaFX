@@ -18,6 +18,9 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:19" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:19" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:19" level="project" />
+    <orderEntry type="library" name="Maven: org.kordamp.ikonli:ikonli-javafx:12.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.kordamp.ikonli:ikonli-core:12.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.kordamp.ikonli:ikonli-fluentui-pack:12.3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.9.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.9.0" level="project" />

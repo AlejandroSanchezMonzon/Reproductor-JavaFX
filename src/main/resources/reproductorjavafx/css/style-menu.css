@@ -1,0 +1,18 @@
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #4d0505;
+    -fx-border-radius: 50px;
+}
+
+.menu-button:hover {
+    -fx-border-color: #053c4d;
+}
+
+#menu-icon .ikonli-font-icon {
+    -fx-icon-code: "fltfal-app-folder-24";
+    -fx-icon-color: black;
+}
+
+#menu-icon:hover {
+    -fx-icon-color: #053c4d;
+}

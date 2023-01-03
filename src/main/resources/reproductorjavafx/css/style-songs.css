@@ -1,0 +1,40 @@
+#song-start .ikonli-font-icon {
+    -fx-icon-code: "fltfmz-previous-24";
+    -fx-icon-color: black;
+    -fx-icon-size: 25px;
+}
+
+#song-start:hover {
+    -fx-icon-color: #4d0505;
+}
+
+#song-pause .ikonli-font-icon {
+    -fx-icon-code: "fltfmz-play-48";
+    -fx-icon-color: black;
+    -fx-icon-size: 25px;
+}
+
+#song-pause:hover {
+    -fx-icon-color: #4d0505;
+}
+
+#song-pause:focused {
+    -fx-icon-code: "fltfmz-pause-48";
+    -fx-icon-color: black;
+    -fx-icon-size: 25px;
+}
+
+#song-end .ikonli-font-icon {
+    -fx-icon-code: "fltfmz-next-24";
+    -fx-icon-color: black;
+    -fx-icon-size: 25px;
+}
+
+#song-end:hover {
+    -fx-icon-color: #4d0505;
+}
+
+#album-image:hover {
+    -fx-border-color: #4d0505;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
+}
