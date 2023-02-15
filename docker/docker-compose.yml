@@ -1,0 +1,13 @@
+services:
+  web:
+    image: javierpalacios/musicfx-api:latest
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=musicfx
+      - POSTGRES_PASSWORD=musicfx
+      - POSTGRES_USER=musicfx
