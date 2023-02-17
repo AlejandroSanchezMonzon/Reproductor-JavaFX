@@ -7,8 +7,10 @@ public class Multimedia {
     private final Media media;
     private final MediaPlayer mediaPlayer;
 
+    // Clase -> http://192.168.16.10
+    // Casa -> http://localhost:8080
     public Multimedia(String mp3) {
-        media = new Media("https://192.168.16.10/" + mp3);
+        media = new Media("http://192.168.16.10" + mp3);
         mediaPlayer = new MediaPlayer(media);
     }
 

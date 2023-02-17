@@ -22,15 +22,6 @@ public class AppMainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        closeButton.setVisible(true);
-
-        closeButton.setOnAction(event -> {
-            listViewController.playerPane.setVisible(false);
-            listViewController.songsList.setVisible(true);
-
-            System.out.println("Botón de cerrar pulsado.");
-        });
-
         cancionesButton.setOnAction(event -> {
             listViewController.songsList.setVisible(true);
             listViewController.playerPane.setVisible(false);

@@ -6,6 +6,7 @@
 
 .menu-button:hover {
     -fx-border-color: #053c4d;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }
 
 #menu-icon .ikonli-font-icon {
@@ -24,7 +25,8 @@
 }
 
 #close-song:hover {
-    -fx-icon-color: #053c4d;
+    -fx-icon-color: #4d0505;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }
 
 #song-start .ikonli-font-icon {
@@ -35,6 +37,7 @@
 
 #song-start:hover {
     -fx-icon-color: #4d0505;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }
 
 #song-pause .ikonli-font-icon {
@@ -45,6 +48,7 @@
 
 #song-pause:hover {
     -fx-icon-color: #4d0505;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }
 
 #song-pause:focused {
@@ -61,6 +65,7 @@
 
 #song-end:hover {
     -fx-icon-color: #4d0505;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }
 
 #album-image:hover {
@@ -77,4 +82,5 @@
 
 #canciones-button:hover {
     -fx-border-color: #4d0505;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }

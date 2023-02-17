@@ -56,6 +56,8 @@ public class ListViewController implements Initializable {
 
     private boolean isPause = true;
 
+    private Multimedia multimedia = null;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getSongs();
@@ -67,11 +69,12 @@ public class ListViewController implements Initializable {
             System.out.println("-> Canción seleccionada: " + song.toString());
 
             setUpReproducer(song);
-
             playerPane.setVisible(true);
         });
     }
 
+    // Clase -> http://192.168.16.10/songs/
+    // Casa -> http://localhost:8080/songs/
     private void getSongs() {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -90,35 +93,35 @@ public class ListViewController implements Initializable {
     }
 
 /*
-    private void createSongs(JSONArray dataArray) {
-        dataArray.forEach(data -> songsList.getItems().add(new SongRead(
-                ((JSONObject) data).optString("title"),
-                ((JSONObject) data).getString("publisher"),
-                ((JSONObject) data).getInt("year"),
-                ((JSONObject) data).getInt("track_num"),
-                ((JSONObject) data).getString("file"),
-                ((JSONObject) data).getInt("album_id"),
-                ((JSONObject) data).getInt("genre_id"),
-                ((JSONObject) data).getInt("id"),
-                new AlbumRead(
-                        ((JSONObject) data).getJSONObject("album").getString("title"),
-                        ((JSONObject) data).getJSONObject("album").getInt("year"),
-                        ((JSONObject) data).getJSONObject("album").getString("picture"),
-                        ((JSONObject) data).getJSONObject("album").getString("mbid"),
-                        ((JSONObject) data).getJSONObject("album").getInt("artist_id"),
-                        ((JSONObject) data).getJSONObject("album").getInt("id"),
-                        new ArtistRead(
-                                ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("name"),
-                                ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("mbid"),
-                                ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("artist_background"),
-                                ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("artist_logo"),
-                                ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("artist_thumbnail"),
-                                ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("artist_banner"),
-                                ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getInt("id")
-                        )
-                )
-        )));
-    }
+ private void createSongs(JSONArray dataArray) {
+     dataArray.forEach(data -> songsList.getItems().add(new SongRead(
+             ((JSONObject) data).optString("title"),
+             ((JSONObject) data).getString("publisher"),
+             ((JSONObject) data).getInt("year"),
+             ((JSONObject) data).getInt("track_num"),
+             ((JSONObject) data).getString("file"),
+             ((JSONObject) data).getInt("album_id"),
+             ((JSONObject) data).getInt("genre_id"),
+             ((JSONObject) data).getInt("id"),
+             new AlbumRead(
+                     ((JSONObject) data).getJSONObject("album").getString("title"),
+                     ((JSONObject) data).getJSONObject("album").getInt("year"),
+                     ((JSONObject) data).getJSONObject("album").getString("picture"),
+                     ((JSONObject) data).getJSONObject("album").getString("mbid"),
+                     ((JSONObject) data).getJSONObject("album").getInt("artist_id"),
+                     ((JSONObject) data).getJSONObject("album").getInt("id"),
+                     new ArtistRead(
+                             ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("name"),
+                             ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("mbid"),
+                             ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("artist_background"),
+                             ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("artist_logo"),
+                             ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("artist_thumbnail"),
+                             ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getString("artist_banner"),
+                             ((JSONObject) data).getJSONObject("album").getJSONObject("artist").getInt("id")
+                     )
+             )
+     )));
+ }
 */
 
     /**
@@ -127,40 +130,44 @@ public class ListViewController implements Initializable {
      */
     private void createSongsAlternative(JSONArray dataArray) {
         dataArray.forEach(data -> {
-            JSONObject json = (JSONObject) data;
-            JSONObject albumJson = json.optJSONObject("album");
-            JSONObject artistJson = albumJson.optJSONObject("artist");
-
             songsList.getItems().add(new SongRead(
-                    json.optString("title"),
-                    json.optString("publisher"),
-                    json.optInt("year"),
-                    json.optInt("track_num"),
-                    json.optString("file"),
-                    json.optInt("album_id"),
-                    json.optInt("genre_id"),
-                    json.optInt("id"),
-                    new AlbumRead(albumJson.optString("title"),
-                            albumJson.optInt("year"),
-                            albumJson.optString("picture"),
-                            albumJson.optString("mbid"),
-                            albumJson.optInt("artist_id"),
-                            albumJson.optInt("id"),
+                    ((JSONObject) data).optString("title"),
+                    ((JSONObject) data).optString("publisher"),
+                    ((JSONObject) data).optInt("year"),
+                    ((JSONObject) data).optInt("track_num"),
+                    ((JSONObject) data).optString("file"),
+                    ((JSONObject) data).optInt("album_id"),
+                    ((JSONObject) data).optInt("genre_id"),
+                    ((JSONObject) data).optInt("id"),
+                    new AlbumRead(
+                            ((JSONObject) data).optJSONObject("album").optString("title"),
+                            ((JSONObject) data).optJSONObject("album").optInt("year"),
+                            ((JSONObject) data).optJSONObject("album").optString("picture"),
+                            ((JSONObject) data).optJSONObject("album").optString("mbid"),
+                            ((JSONObject) data).optJSONObject("album").optInt("artist_id"),
+                            ((JSONObject) data).optJSONObject("album").optInt("id"),
                             new ArtistRead(
-                                    artistJson.optString("name"),
-                                    artistJson.optString("mbid"),
-                                    artistJson.optString("artist_background"),
-                                    artistJson.optString("artist_logo"),
-                                    artistJson.optString("artist_thumbnail"),
-                                    artistJson.optString("artist_banner"),
-                                    artistJson.optInt("id"))
+                                    ((JSONObject) data).optJSONObject("album").optJSONObject("artist").optString("name"),
+                                    ((JSONObject) data).optJSONObject("album").optJSONObject("artist").optString("mbid"),
+                                    ((JSONObject) data).optJSONObject("album").optJSONObject("artist").optString("artist_background"),
+                                    ((JSONObject) data).optJSONObject("album").optJSONObject("artist").optString("artist_logo"),
+                                    ((JSONObject) data).optJSONObject("album").optJSONObject("artist").optString("artist_thumbnail"),
+                                    ((JSONObject) data).optJSONObject("album").optJSONObject("artist").optString("artist_banner"),
+                                    ((JSONObject) data).optJSONObject("album").optJSONObject("artist").optInt("id"))
                     )
             ));
         });
     }
 
     public void setUpReproducer(SongRead song) {
-        Multimedia multimedia = new Multimedia(song.getFile());
+
+        if (multimedia != null) {
+            multimedia.getMediaPlayer().stop();
+        }
+
+        multimedia = new Multimedia(song.getFile());
+        playController(multimedia);
+        System.out.println(multimedia.getMedia().getSource());
 
         multimedia.getMedia().getMetadata().addListener((MapChangeListener.Change<? extends String, ?> change) -> {
             String key = change.getKey();

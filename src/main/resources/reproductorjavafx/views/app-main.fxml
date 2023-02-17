@@ -28,16 +28,6 @@
                     <FontIcon id="menu-icon" iconLiteral="fltfal-app-folder-24" iconSize="25"/>
                 </graphic>
             </MenuButton>
-            <Button fx:id="closeButton" mnemonicParsing="false" style="-fx-background-color: transparent;"
-                    visible="false">
-                <HBox.margin>
-                    <Insets top="5.0"/>
-                </HBox.margin>
-                <graphic>
-                    <FontIcon id="close-song" iconLiteral="fltral-dismiss-20" iconSize="20" strokeType="OUTSIDE"
-                              strokeWidth="0.0"/>
-                </graphic>
-            </Button>
         </HBox>
         <Pane prefHeight="605.0" prefWidth="200.0">
             <fx:include fx:id="listView" source="list-view.fxml" visible="true"/>
